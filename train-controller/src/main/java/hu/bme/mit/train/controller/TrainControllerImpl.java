@@ -7,7 +7,8 @@ public class TrainControllerImpl implements TrainController {
 	private int step = 0;
 	private int referenceSpeed = 0;
 	private int speedLimit = 0;
-
+	private Thread speedUpdate = new Thread(new SpeedUpdate());
+	
 	@Override
 	public void followSpeed() {
 		if (referenceSpeed < 0) {
@@ -43,7 +44,24 @@ public class TrainControllerImpl implements TrainController {
 
 	@Override
 	public void setJoystickPosition(int joystickPosition) {
-		this.step = joystickPosition;		
+		this.step = joystickPosition;
+		if (!speedUpdate.isAlive()) {
+			speedUpdate.start();
+		}
 	}
+	
+	private class SpeedUpdate implements Runnable {
 
+		@Override
+		public void run() {
+			while (true) {
+				TrainControllerImpl.this.followSpeed();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
