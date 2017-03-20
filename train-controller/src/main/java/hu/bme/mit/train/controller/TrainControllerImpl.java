@@ -52,7 +52,7 @@ public class TrainControllerImpl implements TrainController {
 		this.step = joystickPosition;		
 	}
 	
-	public class updateReferenceSpeed extends Thread{
+	private class updateReferenceSpeed extends Thread{
 		
 		@Override
 		public void run() {
