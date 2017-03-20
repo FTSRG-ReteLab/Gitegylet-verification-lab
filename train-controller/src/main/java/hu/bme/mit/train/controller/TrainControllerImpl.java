@@ -50,7 +50,7 @@ public class TrainControllerImpl implements TrainController {
 		}
 	}
 	
-	public class SpeedUpdate implements Runnable {
+	private class SpeedUpdate implements Runnable {
 
 		@Override
 		public void run() {
